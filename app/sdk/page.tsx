@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { WebVerification } from "vdid-sdk-web";
+import { publicApiKey } from "../constants/credentials";
 
 const Sdk = () => {
   const [container, setContainer] = useState<JSX.Element>();
@@ -18,8 +19,6 @@ const Sdk = () => {
 
   const onClickHandler = async () => {
     try {
-      const publicApiKey =
-        "pk_test_ElTXm0vy1O1D44zIemBiniFqQzYPnMiURuo2tFkRHyY=";
       const vdid = new WebVerification(publicApiKey);
       const url = vdid.getUrl({ uuid: "" });
       console.log(url);
