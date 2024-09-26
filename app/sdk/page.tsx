@@ -16,17 +16,26 @@ import { selectStyles } from "../ui/select.styles";
 import { initialLanguage, languageOptions } from "../fixtures/language.fixture";
 import { useState } from "react";
 import { OptionsInterface } from "../interfaces/sdk.interface";
-import getToken from "../helpers/getToken";
-import { client_id, client_secret } from "../constants/credentials";
+import { privateApiKey } from "../constants/credentials";
+import DialogVerification from "./dialogs/verification";
+import { API_ID_V3 } from "../constants/endpoints";
 
 const Sdk = () => {
   const [visibleFormSDK, setVisibleFormSDK] = useState(false);
+  const [visibleVerification, setVisibleVerification] = useState(false);
   const [idUserSDK, setIdUserSDK] = useState<string>("");
   const [disabled, setDisabled] = useState<boolean>(false);
   const [clientNameSDK, setClientNameSDK] = useState<string>("");
   const [optionsSelfieSDK, setOptionsSelfieSDK] = useState<string>("no");
   const [optionVerifyIpSDK, setOptionVerifyIpSDK] = useState<boolean>(false);
   const [language, setLanguage] = useState<OptionsInterface>(initialLanguage);
+  const [dataVerification, setDataVerification] = useState<{
+    identifier: string;
+    apikey: string;
+  }>({
+    identifier: "",
+    apikey: "",
+  });
 
   const onChangeInputIdUser = (event: string) =>
     setIdUserSDK(event?.replace(/\s/g, ""));
@@ -53,52 +62,54 @@ const Sdk = () => {
   }) => {
     try {
       setDisabled(true);
-      const { error, token } = await getToken({
-        audience: "veridocid",
-        client_id,
-        client_secret,
-        grant_type: "",
-      });
 
-      if (error) alert("Unauthorized");
       const requestBody = {
         id: idUser,
-        selfie: optionSelfie,
-        verifyIp: optionVerifyIp,
-        redirect_url: "https://plataforma.sumamexico.com/",
-        token: `Bearer ${token?.access_token}`,
-        clientName,
-        language: language?.value ?? "es",
+        options: {
+          checks: {
+            selfie: optionSelfie,
+            verifyIp: optionVerifyIp,
+            clientName,
+          },
+          redirect_url: "https://plataforma.sumamexico.com/",
+          language: language?.value ?? "es",
+        },
       };
 
-      if (!clientName) delete requestBody.clientName;
+      if (!clientName) delete requestBody.options.checks.clientName;
 
-      // if (response.ok) {
-      //   const result = await response.json();
+      const response = await fetch(`${API_ID_V3}/createVerification`, {
+        method: "POST",
+        headers: {
+          "x-api-key": `${privateApiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
 
-      //   //Reset values
-      //   setIdUserSDK("");
-      //   setDisabled(false);
-      //   setClientNameSDK("");
-      //   setOptionsSelfieSDK("no");
-      //   setOptionVerifyIpSDK(false);
+      if (response.ok) {
+        const result = await response.json();
 
-      //   //Close Modal - Form SDK
-      //   setVisibleFormSDK(false);
-      //   //Open modal - Verification
-      //   setVisibleVerification(true);
-      //   // Data capture
-      //   setDataVerification({
-      //     apikey: result.apiKey,
-      //     identifier: result.identifier,
-      //   });
-      // } else {
-      //   snackbar.setMessage(`${t("messageErrorData")}`, "error", {
-      //     horizontal: "center",
-      //     vertical: "top",
-      //   });
-      //   setDisabled(false);
-      // }
+        //Reset values
+        setIdUserSDK("");
+        setDisabled(false);
+        setClientNameSDK("");
+        setOptionsSelfieSDK("no");
+        setOptionVerifyIpSDK(false);
+
+        //Close Modal - Form SDK
+        setVisibleFormSDK(false);
+        //Open modal - Verification
+        setVisibleVerification(true);
+        // Data capture
+        setDataVerification({
+          apikey: result.apiKey,
+          identifier: result.identifier,
+        });
+      } else {
+        alert("Enable to start verification");
+        setDisabled(false);
+      }
     } catch (error) {
       alert("Cannot complete verification");
       setDisabled(false);
@@ -290,6 +301,15 @@ const Sdk = () => {
           </Button>
         </DialogActions>
       </Dialog>
+      {visibleVerification && (
+        <DialogVerification
+          openModal={visibleVerification}
+          apikey={dataVerification.apikey}
+          identifier={dataVerification.identifier}
+          setDataVerification={setDataVerification}
+          setVisibleVerification={setVisibleVerification}
+        />
+      )}
     </div>
   );
 };
