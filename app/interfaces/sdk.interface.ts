@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 interface OptionsInterface {
   label: string | JSX.Element;
   value: string;
@@ -21,4 +23,14 @@ interface PropsSdk {
   optionVerifyIpSDK: boolean;
 }
 
-export type { PropsSdk, OptionsInterface };
+interface PropsDialogVerification {
+  openModal: boolean;
+  identifier: string;
+  apikey: string;
+  setVisibleVerification: Dispatch<SetStateAction<boolean>>;
+  setDataVerification: Dispatch<
+    SetStateAction<{ identifier: string; apikey: string }>
+  >;
+}
+
+export type { PropsSdk, OptionsInterface, PropsDialogVerification };
