@@ -92,13 +92,10 @@ body {
   --bg-label-default-register: #c0bdc95b;
   --color-label-default-register: #5f5d5dec;
   /* Box shadow */
-  --shadow-cards: #0000001a 0px 20px 25px -5px,
-    rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+  --shadow-cards: #0000001a 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
   --box-shadow-bg-color: #4d4d5538 0px 1px 22px 0px;
-  --box-shadow-accordion: #0000001a 0px 20px 25px -5px,
-    #0000000a 0px 10px 10px -5px;
-  --box-shadow-card-sign: #2928281a 0px 10px 25px -5px,
-    #28282b0a 0px 10px 10px -5px;
+  --box-shadow-accordion: #0000001a 0px 20px 25px -5px, #0000000a 0px 10px 10px -5px;
+  --box-shadow-card-sign: #2928281a 0px 10px 25px -5px, #28282b0a 0px 10px 10px -5px;
   --box-shadow-input: #64646f21 0px 1px 22px 0px;
   /* Clipboard */
   --clipboard-color: #646464;
@@ -306,16 +303,14 @@ table[data-theme="dark"] {
   width: 100%;
 }
 
-.MuiInputBase-root
-  .MuiSvgIcon-root.MuiSelect-icon.MuiTablePagination-selectIcon {
+.MuiInputBase-root .MuiSvgIcon-root.MuiSelect-icon.MuiTablePagination-selectIcon {
   color: var(--text-color-description);
 }
 
 .MuiTablePagination-selectLabel,
 .MuiTablePagination-displayedRows,
 .MuiInputBase-root.MuiInputBase-colorPrimary {
-  font-family: "Plus Jakarta Sans", sans-serif, -apple-system, "Roboto",
-    "Ubuntu" !important;
+  font-family: "Plus Jakarta Sans", sans-serif, -apple-system, "Roboto", "Ubuntu" !important;
   font-size: clamp(0.78rem, 0.84rem, 0.9rem) !important;
   color: var(--text-color-description) !important;
 }
@@ -381,9 +376,7 @@ table[data-theme="dark"] {
   color: var(--color-tag-sign-success) !important;
   background-color: var(--bg-hover-item) !important;
 }
-.drawer_main_custom
-  .MuiButtonBase-root.MuiListItem-root:hover
-  .MuiListItemIcon-root {
+.drawer_main_custom .MuiButtonBase-root.MuiListItem-root:hover .MuiListItemIcon-root {
   color: var(--color-tag-sign-success);
 }
 
@@ -1174,8 +1167,7 @@ select::-ms-expand {
   background-color: transparent !important;
 }
 
-.accordion_custom_signer
-  .MuiButtonBase-root.MuiAccordionSummary-root.Mui-expanded {
+.accordion_custom_signer .MuiButtonBase-root.MuiAccordionSummary-root.Mui-expanded {
   background-color: var(--bg-color-rl-card);
   padding-top: 10px;
   padding-bottom: 10px;
@@ -1647,8 +1639,8 @@ select::-ms-expand {
 
 .content_popover_section {
   background-color: var(--bg-color-card-responsive) !important;
-  box-shadow: 0 2px 4px -8px rgba(26, 25, 25, 0.24),
-    0 5px 16px 0 rgba(21, 21, 21, 0.16), 0 9px 28px 2px rgba(34, 34, 34, 0.11) !important;
+  box-shadow: 0 2px 4px -8px rgba(26, 25, 25, 0.24), 0 5px 16px 0 rgba(21, 21, 21, 0.16),
+    0 9px 28px 2px rgba(34, 34, 34, 0.11) !important;
   color: var(--text-color-main) !important;
 }
 

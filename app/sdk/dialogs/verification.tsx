@@ -1,6 +1,5 @@
 "use client";
 
-import "./dialog_style.css";
 import { motion } from "framer-motion";
 import { isArray, isEmpty } from "lodash";
 import Button from "@mui/material/Button";
